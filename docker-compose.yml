@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    container_name: mini-store-db
+    environment:
+      POSTGRES_DB: ministore
+      POSTGRES_USER: ministore
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5433:5432"
+    volumes:
+      - ministore_pgdata:/var/lib/postgresql/data
+
+volumes:
+  ministore_pgdata:
