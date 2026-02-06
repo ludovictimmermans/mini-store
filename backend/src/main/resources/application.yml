@@ -11,6 +11,7 @@ spring:
     password: root
 
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: validate
     properties:
@@ -25,3 +26,7 @@ management:
     web:
       exposure:
         include: health,info
+app:
+  jwt:
+    secret: "CHANGE_ME_DEV_SECRET_CHANGE_ME_DEV_SECRET_123456"
+    ttlMinutes: 60
