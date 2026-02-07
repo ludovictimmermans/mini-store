@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.example.ministore.auth.InvalidCredentialsException;
 import com.example.ministore.user.EmailAlreadyUsedException;
 
 @RestControllerAdvice
@@ -19,4 +20,13 @@ public class ApiExceptionHandler {
                 "error", "EMAIL_ALREADY_USED",
                 "message", ex.getMessage());
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public Map<String, String> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return Map.of(
+                "error", "INVALID_CREDENTIALS",
+                "message", ex.getMessage());
+    }
+
 }
