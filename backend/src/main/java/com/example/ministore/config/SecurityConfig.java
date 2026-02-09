@@ -12,24 +12,26 @@ import com.example.ministore.auth.JwtAuthFilter;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/api/ping",
-                                "/actuator/health",
-                                "/api/auth/register",
-                                "/api/auth/login")
-                        .permitAll()
-                        .anyRequest().authenticated())
-                // we do not want basic/form auth in JWT mode
-                .httpBasic(basic -> basic.disable())
-                .formLogin(form -> form.disable())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        @Bean
+        SecurityFilterChain securityFilterChain(HttpSecurity http, JwtAuthFilter jwtAuthFilter) throws Exception {
+                http
+                                .csrf(csrf -> csrf.disable())
+                                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers(
+                                                                "/error",
+                                                                "/api/ping",
+                                                                "/actuator/health",
+                                                                "/api/auth/register",
+                                                                "/api/auth/login",
+                                                                "/api/products/**")
+                                                .permitAll()
+                                                .anyRequest().authenticated())
+                                // we do not want basic/form auth in JWT mode
+                                .httpBasic(basic -> basic.disable())
+                                .formLogin(form -> form.disable())
+                                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+                return http.build();
+        }
 }
